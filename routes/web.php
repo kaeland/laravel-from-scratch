@@ -19,37 +19,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/posts', function () {
-    $posts = DB::table('posts')->get();
+Route::get('/posts', 'PostsController@index')->name('posts.index');
 
-    return view('posts.index', [
-        'posts' => $posts
-    ]);
-})->name('posts.index');
+Route::get('/posts/create', 'PostsController@create')->name('posts.create');
 
-Route::get('/posts/create', function () {
-    return view('posts.create');
-})->name('posts.create');
+Route::post('/posts/store', 'PostsController@store')->name('posts.store');
 
-Route::post('/posts/store', function (Request $request) {
-    DB::insert('insert into posts (title, content) values (?, ?)', [
-        $request->input('title'),
-        $request->input('content')
-    ]);
-    return redirect('posts.index');
-})->name('posts.store');
+Route::get('/posts/{id}', 'PostsController@show')->name('posts.show');
 
-Route::get('/posts/{id}', function (Request $request, $id) {
-    $post = DB::table('posts')->find($id);
-
-    return view('posts.show', [
-        'post' => $post
-    ]);
-})->name('posts.show');
-
-Route::delete('/posts/{id}', function (Request $request, $id) {
-    DB::table('posts')
-        ->where('id', $id)
-        ->delete()->dd();
-    return redirect('/posts');
-})->name('posts.delete');
+Route::delete('/posts/{id}', 'PostsController@delete')->name('posts.delete');
