@@ -23,8 +23,12 @@ Route::get('/posts', 'PostsController@index')->name('posts.index');
 
 Route::get('/posts/create', 'PostsController@create')->name('posts.create');
 
-Route::post('/posts/store', 'PostsController@store')->name('posts.store');
+Route::post('/posts', 'PostsController@store')->name('posts.store');
 
-Route::get('/posts/{id}', 'PostsController@show')->name('posts.show');
+Route::get('/posts/{post}', 'PostsController@show')->name('posts.show');
 
-Route::delete('/posts/{id}', 'PostsController@delete')->name('posts.delete');
+Route::get('posts/{post}/edit', 'PostsController@edit')->name('posts.edit');
+
+Route::patch('/posts/{post}', 'PostsController@update')->name('posts.update');
+
+Route::delete('/posts/{post}', 'PostsController@destroy')->name('posts.destroy');

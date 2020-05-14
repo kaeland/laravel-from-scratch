@@ -5,13 +5,16 @@
     <h1>Checkout the Posts below</h1>
 
     <ul>
-        @foreach ($posts as $post)
+        @forelse ($posts as $post)
         <li>
-            <a href="/posts/{{ $post->id }}">
+            <a href="{{ $post->path() }}">
                 {{ $post->title }}
-            </a>
+            </a> |
+            <a href="{{ route('posts.edit', $post) }}">Edit</a>
         </li>
-        @endforeach
+        @empty
+        <p>No relavant posts to display.</p>
+        @endforelse
     </ul>
 
     <a href="/posts/create">Create a New Post</a>
